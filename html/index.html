@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio BTS SIO – Cybersécurité</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #080c10;
+      --surface: #0d1117;
+      --card: #111820;
+      --border: #1e2d3d;
+      --accent: #00ffe0;
+      --accent2: #0090ff;
+      --green: #39d353;
+      --text: #cdd9e5;
+      --muted: #768390;
+      --mono: 'Share Tech Mono', monospace;
+      --sans: 'Syne', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ── GRID LINES ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,224,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,224,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 3rem;
+      background: rgba(8,12,16,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-family: var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 3rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 span {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      font-family: var(--mono);
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+    }
+
+    .badge {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 0.35rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    .badge.green { border-color: var(--green); color: var(--green); }
+    .badge.blue  { border-color: var(--accent2); color: var(--accent2); }
+    .badge.cyan  { border-color: var(--accent); color: var(--accent); }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: opacity 0.2s;
+    }
+
+    .hero-cta:hover { opacity: 0.85; }
+
+    /* terminal blink */
+    .blink {
+      animation: blink 1s step-end infinite;
+      color: var(--accent);
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ── SECTION WRAPPER ── */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 3rem;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+
+    hr.section-line {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    /* ── SKILLS GRID ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .skill-card {
+      background: var(--card);
+      padding: 1.75rem;
+      transition: background 0.2s;
+    }
+
+    .skill-card:hover { background: #161e28; }
+
+    .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-icon {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .skill-card h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .skill-card p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-family: var(--mono);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1rem;
+    }
+
+    .skill-tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      padding: 0.2rem 0.5rem;
+      background: rgba(0,255,224,0.07);
+      color: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* ── TP CARDS ── */
+    .tp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .tp-card {
+      background: var(--card);
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.5rem;
+      align-items: start;
+      transition: background 0.2s;
+    }
+
+    .tp-card:hover { background: #161e28; }
+
+    .tp-number {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      padding-top: 0.2rem;
+    }
+
+    .tp-content h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .tp-content p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-family: var(--mono);
+      margin-bottom: 0.75rem;
+    }
+
+    .tp-tasks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .tp-tasks li {
+      font-size: 0.75rem;
+      font-family: var(--mono);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tp-tasks li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .tp-status {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.4rem;
+    }
+
+    .status-pill {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .status-pill.done {
+      background: rgba(57,211,83,0.1);
+      color: var(--green);
+      border: 1px solid rgba(57,211,83,0.3);
+    }
+
+    .tp-score {
+      font-family: var(--mono);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .tp-comp {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent2);
+      padding: 0.2rem 0.5rem;
+      border: 1px solid rgba(0,144,255,0.3);
+      border-radius: 2px;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .about-block {
+      background: var(--card);
+      padding: 2rem;
+    }
+
+    .about-block h3 {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .about-block p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+      font-family: var(--mono);
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-row:last-child { border-bottom: none; }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .stat-val {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .stat-val.green { color: var(--green); }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    footer p {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in:nth-child(1) { animation-delay: 0.1s; }
+    .fade-in:nth-child(2) { animation-delay: 0.2s; }
+    .fade-in:nth-child(3) { animation-delay: 0.3s; }
+    .fade-in:nth-child(4) { animation-delay: 0.4s; }
+    .fade-in:nth-child(5) { animation-delay: 0.5s; }
+
+    /* ── GLOWING LINE ── */
+    .glow-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      margin: 0;
+      opacity: 0.4;
+    }
+
+    @media (max-width: 700px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1rem; }
+      section { padding: 3rem 1.5rem; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+      .tp-card { grid-template-columns: 1fr; }
+      .tp-status { align-items: flex-start; flex-direction: row; }
+      .about-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">&gt; bts-sio.cyber<span class="blink">_</span></div>
+    <ul class="nav-links">
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#tp">Réalisations</a></li>
+      <li><a href="#about">Profil</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag fade-in">BTS SIO · Option SISR · EduCentre</div>
+    <h1 class="fade-in">
+      Portfolio<br/><span>Cyber</span>sécurité<br/>& Systèmes
+    </h1>
+    <p class="hero-desc fade-in">
+      Étudiant en BTS SIO · Spécialisation administration systèmes, réseaux et cybersécurité · TPs réalisés sur EduCentre.
+    </p>
+    <div class="hero-badges fade-in">
+      <span class="badge cyan">GLPI</span>
+      <span class="badge cyan">ITIL</span>
+      <span class="badge blue">Administration système</span>
+      <span class="badge blue">Gestion des incidents</span>
+      <span class="badge green">C1 · 100%</span>
+      <span class="badge green">C7 · 100%</span>
+      <span class="badge green">C11 · 100%</span>
+    </div>
+    <a href="#tp" class="hero-cta fade-in">↓ Voir mes réalisations</a>
+  </div>
+
+  <div class="glow-line"></div>
+
+  <!-- COMPÉTENCES -->
+  <section id="competences">
+    <div class="section-label">// 01 · compétences</div>
+    <h2>Ce que je maîtrise</h2>
+    <hr class="section-line"/>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon">🖥️</div>
+          <h3>Administration GLPI</h3>
+        </div>
+        <p>Installation, configuration et administration de GLPI pour le recensement et la gestion d'un parc informatique.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Installation serveur</span>
+          <span class="skill-tag">Agent GLPI</span>
+          <span class="skill-tag">Inventaire automatique</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon">🎫</div>
+          <h3>Gestion des tickets ITIL</h3>
+        </div>
+        <p>Création, affectation et résolution de tickets selon le cycle de vie ITIL. Configuration des catégories et règles automatiques.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Incidents</span>
+          <span class="skill-tag">Demandes</span>
+          <span class="skill-tag">Catégories ITIL</span>
+          <span class="skill-tag">Règles d'affectation</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon">👥</div>
+          <h3>Gestion des utilisateurs</h3>
+        </div>
+        <p>Configuration des profils GLPI (Super-Admin, Admin, Technicien, Self-service), gestion des entités et des droits.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Profils & droits</span>
+          <span class="skill-tag">Entités</span>
+          <span class="skill-tag">Multi-sites</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon">🌐</div>
+          <h3>Virtualisation & Réseau</h3>
+        </div>
+        <p>Déploiement d'agents GLPI sur machines virtuelles, inventaire automatique du parc, supervision des ressources réseau.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">VMs</span>
+          <span class="skill-tag">Agents distants</span>
+          <span class="skill-tag">Export inventaire</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon">📊</div>
+          <h3>Recensement des ressources</h3>
+        </div>
+        <p>Identification et cartographie des actifs numériques d'une organisation : matériels, logiciels, comptes et licences.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">C1 – BTS SIO</span>
+          <span class="skill-tag">Parc informatique</span>
+          <span class="skill-tag">Export GLPI</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon">📈</div>
+          <h3>Référencement & Analytics</h3>
+        </div>
+        <p>Déploiement d'un site sur GitHub Pages, intégration de Google Analytics (Google Tag), génération de trafic et export des rapports de visibilité.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">GitHub Pages</span>
+          <span class="skill-tag">Google Analytics</span>
+          <span class="skill-tag">Google Tag</span>
+          <span class="skill-tag">C11 – BTS SIO</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon">🔒</div>
+          <h3>Sécurité & bonnes pratiques</h3>
+        </div>
+        <p>Désactivation des comptes par défaut inutiles, sécurisation des accès, application des recommandations ITIL en environnement professionnel.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Durcissement</span>
+          <span class="skill-tag">Comptes & droits</span>
+          <span class="skill-tag">ITIL</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="glow-line"></div>
+
+  <!-- TPs / RÉALISATIONS -->
+  <section id="tp">
+    <div class="section-label">// 02 · réalisations</div>
+    <h2>TPs EduCentre</h2>
+    <hr class="section-line"/>
+    <div class="tp-list">
+
+      <!-- TP C1 -->
+      <div class="tp-card">
+        <div class="tp-number">01</div>
+        <div class="tp-content">
+          <h3>C1 – Recenser et identifier les ressources numériques</h3>
+          <p>Installation de GLPI et déploiement d'agents sur serveur et machines virtuelles pour automatiser l'inventaire d'un parc informatique.</p>
+          <ul class="tp-tasks">
+            <li>Installation de GLPI sur serveur</li>
+            <li>Installation d'un agent GLPI sur le serveur GLPI et inventaire</li>
+            <li>Installation d'un agent GLPI sur une VM et inventaire</li>
+            <li>Export GLPI – Ordinateurs</li>
+            <li>Export GLPI – Logiciels</li>
+          </ul>
+          <div class="skill-tags" style="margin-top:0.75rem;">
+            <span class="skill-tag">GLPI</span>
+            <span class="skill-tag">Agent d'inventaire</span>
+            <span class="skill-tag">Virtualisation</span>
+          </div>
+        </div>
+        <div class="tp-status">
+          <span class="status-pill done">✓ Complété</span>
+          <div class="tp-score">100%</div>
+          <span class="tp-comp">C1</span>
+        </div>
+      </div>
+
+      <!-- TP C7 -->
+      <div class="tp-card">
+        <div class="tp-number">02</div>
+        <div class="tp-content">
+          <h3>C7 – Collecter, suivre et orienter des demandes (GLPI)</h3>
+          <p>Configuration complète de GLPI pour la gestion des incidents et demandes : profils, entités multi-sites, cycle de vie des tickets, catégories ITIL et règles d'affectation automatique.</p>
+          <ul class="tp-tasks">
+            <li>Configuration des profils GLPI (Super-Admin, Technicien, Self-service)</li>
+            <li>Création d'utilisateurs et gestion des entités (Paris, Lyon)</li>
+            <li>Création et résolution de tickets (Nouveau → En cours → Résolu)</li>
+            <li>Mise en place des catégories ITIL (Réseau, Logiciel, Matériel…)</li>
+            <li>Règles d'affectation automatique des tickets par catégorie</li>
+            <li>Export utilisateurs, entités et tickets</li>
+          </ul>
+          <div class="skill-tags" style="margin-top:0.75rem;">
+            <span class="skill-tag">ITIL</span>
+            <span class="skill-tag">Tickets</span>
+            <span class="skill-tag">Entités multi-sites</span>
+            <span class="skill-tag">Règles auto</span>
+          </div>
+        </div>
+        <div class="tp-status">
+          <span class="status-pill done">✓ Complété</span>
+          <div class="tp-score">100%</div>
+          <span class="tp-comp">C7 · A2</span>
+        </div>
+      </div>
+
+      <!-- TP C11 -->
+      <div class="tp-card">
+        <div class="tp-number">03</div>
+        <div class="tp-content">
+          <h3>C11 – Référencer les services en ligne et mesurer leur visibilité</h3>
+          <p>Création et publication d'une landing page sur GitHub Pages, intégration de Google Analytics pour le suivi du trafic et analyse de la visibilité du site.</p>
+          <ul class="tp-tasks">
+            <li>Créer une landing page sur le thème de mon choix sur GitHub</li>
+            <li>Partager le lien du repository GitHub public</li>
+            <li>Publier le site via GitHub Pages</li>
+            <li>Partager le lien du site publié</li>
+            <li>Créer un compte Google Analytics</li>
+            <li>Mettre en place le Google Tag dans le head du site</li>
+            <li>Générer des vues sur le site</li>
+            <li>Exporter l'analyse du trafic avec quelques vues</li>
+          </ul>
+          <div class="skill-tags" style="margin-top:0.75rem;">
+            <span class="skill-tag">GitHub Pages</span>
+            <span class="skill-tag">Google Analytics</span>
+            <span class="skill-tag">SEO / Visibilité</span>
+            <span class="skill-tag">HTML/CSS</span>
+          </div>
+        </div>
+        <div class="tp-status">
+          <span class="status-pill done">✓ Complété</span>
+          <div class="tp-score">100%</div>
+          <span class="tp-comp">C11</span>
+        </div>
+      </div>
+
+      <!-- Placeholder -->
+      <div class="tp-card" style="opacity:0.5;">
+        <div class="tp-number">04</div>
+        <div class="tp-content">
+          <h3>Prochain TP – À venir</h3>
+          <p>En cours de réalisation sur EduCentre…</p>
+        </div>
+        <div class="tp-status">
+          <span class="status-pill" style="border:1px solid var(--border);color:var(--muted);">En cours</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="glow-line"></div>
+
+  <!-- PROFIL -->
+  <section id="about">
+    <div class="section-label">// 03 · profil</div>
+    <h2>À propos</h2>
+    <hr class="section-line"/>
+    <div class="about-grid">
+      <div class="about-block">
+        <h3>Formation</h3>
+        <p>Étudiant en BTS Services Informatiques aux Organisations (SIO), option SISR (Solutions d'Infrastructure, Systèmes et Réseaux). Ce portfolio recense mes travaux pratiques réalisés sur la plateforme EduCentre dans le cadre de ma formation.</p>
+      </div>
+      <div class="about-block">
+        <h3>Statistiques EduCentre</h3>
+        <div class="stat-row">
+          <span class="stat-label">TPs complétés</span>
+          <span class="stat-val green">3 / 3</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">C1 – Recensement ressources</span>
+          <span class="stat-val green">100 %</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">C7 – Suivi des demandes</span>
+          <span class="stat-val green">100 %</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">C11 – Services en ligne</span>
+          <span class="stat-val green">100 %</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">A2 – Répondre aux incidents</span>
+          <span class="stat-val green">✓</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Outil principal</span>
+          <span class="stat-val">GLPI</span>
+        </div>
+      </div>
+      <div class="about-block">
+        <h3>Outils & Technologies</h3>
+        <div class="stat-row">
+          <span class="stat-label">GLPI</span>
+          <span class="stat-val">Administration complète</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Linux</span>
+          <span class="stat-val">Déploiement agents</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Virtualisation</span>
+          <span class="stat-val">VMs inventoriées</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">ITIL</span>
+          <span class="stat-val">Gestion tickets</span>
+        </div>
+      </div>
+      <div class="about-block">
+        <h3>Référentiel BTS SIO</h3>
+        <div class="stat-row">
+          <span class="stat-label">C1</span>
+          <span class="stat-val green">Recenser les ressources</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">C7</span>
+          <span class="stat-val green">Collecter & orienter</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">A2</span>
+          <span class="stat-val green">Répondre aux incidents</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">C11</span>
+          <span class="stat-val green">Services en ligne</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 · Portfolio BTS SIO · Cybersécurité & Systèmes</p>
+    <p>Construit pour <a href="https://pages.github.com">GitHub Pages</a> · Hébergé sur GitHub</p>
+  </footer>
+
+</body>
+</html>
