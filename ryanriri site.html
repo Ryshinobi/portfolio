@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio BTS SIO – Cybersécurité & Systèmes | Ryan RIRI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #080c10;
+      --surface: #0d1117;
+      --card: #111820;
+      --border: #1e2d3d;
+      --accent: #00ffe0;
+      --accent2: #0090ff;
+      --green: #39d353;
+      --text: #cdd9e5;
+      --muted: #768390;
+      --mono: 'Share Tech Mono', monospace;
+      --sans: 'Syne', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow-x: hidden;
+    }
+
+    /* noise + grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,224,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,224,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 3rem;
+      background: rgba(8,12,16,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-family: var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 3rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    h1 span {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--accent);
+    }
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      font-family: var(--mono);
+    }
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+    }
+    .badge {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 0.35rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .badge.green { border-color: var(--green); color: var(--green); }
+    .badge.blue  { border-color: var(--accent2); color: var(--accent2); }
+    .badge.cyan  { border-color: var(--accent); color: var(--accent); }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: opacity 0.2s;
+    }
+    .hero-cta:hover { opacity: 0.85; }
+    .blink {
+      animation: blink 1s step-end infinite;
+      color: var(--accent);
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 3rem;
+    }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    hr.section-line {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .skill-card {
+      background: var(--card);
+      padding: 1.75rem;
+      transition: background 0.2s;
+    }
+    .skill-card:hover { background: #161e28; }
+    .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .skill-icon {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .skill-card h3 { font-size: 0.9rem; font-weight: 700; }
+    .skill-card p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-family: var(--mono);
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1rem;
+    }
+    .skill-tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      padding: 0.2rem 0.5rem;
+      background: rgba(0,255,224,0.07);
+      color: var(--accent);
+      border-radius: 2px;
+    }
+
+    .tp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .tp-card {
+      background: var(--card);
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.5rem;
+      align-items: start;
+      transition: background 0.2s;
+    }
+    .tp-card:hover { background: #161e28; }
+    .tp-number {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+    .tp-content h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .tp-content p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      margin-bottom: 0.75rem;
+    }
+    .tp-tasks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .tp-tasks li {
+      font-size: 0.75rem;
+      font-family: var(--mono);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tp-tasks li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+    }
+    .tp-status {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.4rem;
+    }
+    .status-pill.done {
+      background: rgba(57,211,83,0.1);
+      color: var(--green);
+      border: 1px solid rgba(57,211,83,0.3);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+    }
+    .tp-score {
+      font-family: var(--mono);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .tp-comp {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent2);
+      padding: 0.2rem 0.5rem;
+      border: 1px solid rgba(0,144,255,0.3);
+      border-radius: 2px;
+    }
+
+    /* Screenshots & preuves */
+    .preuves-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .preuve-block {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .preuve-header {
+      padding: 1rem 1.5rem;
+      background: rgba(0,255,224,0.03);
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.3px;
+    }
+    .preuve-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      background: var(--surface);
+    }
+    .preuve-img {
+      max-width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #0a1018;
+      padding: 0.25rem;
+    }
+    .preuve-img img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+    }
+    .preuve-caption {
+      margin-top: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .table-comp {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    .table-comp table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+    }
+    .table-comp th, .table-comp td {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      color: var(--text);
+    }
+    .table-comp th {
+      color: var(--accent);
+      font-weight: 700;
+      background: rgba(0,255,224,0.05);
+    }
+    .check { color: var(--green); font-weight: bold; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .about-block {
+      background: var(--card);
+      padding: 2rem;
+    }
+    .about-block h3 {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-label { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+    .stat-val { font-family: var(--mono); font-size: 0.75rem; font-weight: 700; }
+    .stat-val.green { color: var(--green); }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    footer p { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 700px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1rem; }
+      section { padding: 3rem 1.5rem; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+      .tp-card { grid-template-columns: 1fr; }
+      .tp-status { align-items: flex-start; flex-direction: row; }
+      .about-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">&gt; ryan-riri.cyber<span class="blink">_</span></div>
+  <ul class="nav-links">
+    <li><a href="#competences">Compétences</a></li>
+    <li><a href="#tp">Réalisations</a></li>
+    <li><a href="#preuves">Preuves & synthèse</a></li>
+    <li><a href="#about">Profil</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag fade-in">BTS SIO · Option SISR · Ryan RIRI</div>
+  <h1 class="fade-in">
+    Portfolio<br/><span>Cyber</span>sécurité<br/>& Systèmes
+  </h1>
+  <p class="hero-desc fade-in">
+    Étudiant en BTS SIO · spécialisation infrastructure, réseaux et cybersécurité · TPs EduCentre & réalisations professionnelles.
+  </p>
+  <div class="hero-badges fade-in">
+    <span class="badge cyan">GLPI</span><span class="badge cyan">ITIL</span>
+    <span class="badge blue">Blue/Red Team</span><span class="badge blue">Active Directory</span>
+    <span class="badge green">Hackaton chef de projet</span>
+    <span class="badge green">C1/C7/C11 100%</span>
+  </div>
+  <a href="#tp" class="hero-cta fade-in">↓ Voir mes réalisations</a>
+</div>
+
+<div class="glow-line"></div>
+
+<!-- COMPÉTENCES -->
+<section id="competences">
+  <div class="section-label">// 01 · compétences transverses</div>
+  <h2>Ce que je maîtrise</h2>
+  <hr class="section-line"/>
+  <div class="skills-grid">
+    <div class="skill-card"><div class="skill-card-header"><div class="skill-icon">🖥️</div><h3>GLPI / Parc informatique</h3></div><p>Installation, agents, inventaire automatique, gestion du patrimoine.</p><div class="skill-tags"><span class="skill-tag">Agent GLPI</span><span class="skill-tag">Inventaire</span></div></div>
+    <div class="skill-card"><div class="skill-card-header"><div class="skill-icon">🎫</div><h3>ITIL & Tickets</h3></div><p>Gestion cycle de vie, catégories, règles d'affectation, entités multi-sites.</p><div class="skill-tags"><span class="skill-tag">Incidents</span><span class="skill-tag">Règles auto</span></div></div>
+    <div class="skill-card"><div class="skill-card-header"><div class="skill-icon">🛡️</div><h3>Blue Team / Red Team</h3></div><p>Simulation attaques sur GLPI, audit, export logs et base données.</p><div class="skill-tags"><span class="skill-tag">Cyberattaque</span><span class="skill-tag">GLPI hardening</span></div></div>
+    <div class="skill-card"><div class="skill-card-header"><div class="skill-icon">🔐</div><h3>Sécurisation HTTP/TLS</h3></div><p>Apache, certificats auto-signés, handshake TLS, chaîne de confiance.</p><div class="skill-tags"><span class="skill-tag">Debian/HTTPS</span><span class="skill-tag">OpenSSL</span></div></div>
+    <div class="skill-card"><div class="skill-card-header"><div class="skill-icon">📊</div><h3>Google Analytics & SEO</h3></div><p>GitHub Pages, Tag Manager, analyse trafic et visibilité C11.</p><div class="skill-tags"><span class="skill-tag">GA4</span><span class="skill-tag">Référencement</span></div></div>
+    <div class="skill-card"><div class="skill-card-header"><div class="skill-icon">👥</div><h3>Active Directory</h3></div><p>Gestion utilisateurs, Group Policy, migration Windows 10→11, script déploiement.</p><div class="skill-tags"><span class="skill-tag">AD DS</span><span class="skill-tag">PowerShell</span></div></div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- RÉALISATIONS TPs -->
+<section id="tp">
+  <div class="section-label">// 02 · réalisations EduCentre & projets</div>
+  <h2>Travaux pratiques & Projets</h2>
+  <hr class="section-line"/>
+  <div class="tp-list">
+    <div class="tp-card"><div class="tp-number">01</div><div class="tp-content"><h3>C1 – Recenser ressources numériques (GLPI)</h3><p>Installation GLPI + agents, inventaire serveur & VM, export matériels/logiciels.</p><ul class="tp-tasks"><li>GLPI serveur + agents</li><li>Inventaire automatique</li><li>Export ordinateurs/logiciels</li></ul></div><div class="tp-status"><span class="status-pill done">✓ Complété</span><div class="tp-score">100%</div><span class="tp-comp">C1</span></div></div>
+    <div class="tp-card"><div class="tp-number">02</div><div class="tp-content"><h3>C7 – Collecter, suivre et orienter demandes</h3><p>Profils GLPI, entités Paris/Lyon, tickets ITIL, règles d'affectation automatique.</p><ul class="tp-tasks"><li>Super-Admin / Technicien</li><li>Catégories ITIL</li><li>Export utilisateurs/tickets</li></ul></div><div class="tp-status"><span class="status-pill done">✓ Complété</span><div class="tp-score">100%</div><span class="tp-comp">C7 · A2</span></div></div>
+    <div class="tp-card"><div class="tp-number">03</div><div class="tp-content"><h3>Support X Cybersécurité – Red/Blue team</h3><p>Déploiement GLPI front/backend, phase attaque, blue team, export tickets & BDD.</p><ul class="tp-tasks"><li>Phase d'attaque finalisée</li><li>Blue team & dernier audit</li><li>Export base GLPI + tickets</li></ul></div><div class="tp-status"><span class="status-pill done">✓ Complété</span><div class="tp-score">100%</div><span class="tp-comp">Cyber · GLPI</span></div></div>
+    <div class="tp-card"><div class="tp-number">04</div><div class="tp-content"><h3>FDR – Sécuriser serveur HTTP (Apache/TLS)</h3><p>VM Debian 12, génération certificat auto-signé, configuration HTTPS, handshake TLS.</p><ul class="tp-tasks"><li>Apache + SSL</li><li>openssl req -x509</li><li>Analyse chain of trust</li></ul></div><div class="tp-status"><span class="status-pill done">✓ Complété</span><div class="tp-score">100%</div><span class="tp-comp">Sécurité</span></div></div>
+    <div class="tp-card"><div class="tp-number">05</div><div class="tp-content"><h3>C11 – Référencement & Google Analytics</h3><p>Landing page GitHub Pages, intégration Google Tag, génération de trafic, rapports de visibilité.</p><ul class="tp-tasks"><li>Déploiement GitHub Pages</li><li>Google Analytics / Tag Manager</li><li>Export analyse trafic</li></ul></div><div class="tp-status"><span class="status-pill done">✓ Complété</span><div class="tp-score">100%</div><span class="tp-comp">C11</span></div></div>
+    <div class="tp-card"><div class="tp-number">06</div><div class="tp-content"><h3>Hackaton V2 – Rôle chef de projet</h3><p>Pilotage d'équipe, planification, gestion des ressources et respect des délais.</p><ul class="tp-tasks"><li>Analyse objectifs projet</li><li>Planification activités</li><li>Évaluation indicateurs</li></ul></div><div class="tp-status"><span class="status-pill done">✓ Validé</span><div class="tp-score">100%</div><span class="tp-comp">Mode projet</span></div></div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- NOUVELLE SECTION : PREUVES + TABLEAU SYNTHÈSE (remplace le PDF) -->
+<section id="preuves">
+  <div class="section-label">// 03 · preuves & tableau de synthèse BTS</div>
+  <h2>compétences transversales</h2>
+  <hr class="section-line"/>
+  
+  <div class="preuves-grid">
+    <!-- Bloc tableau de synthèse des réalisations professionnelles -->
+    <div class="preuve-block">
+      <div class="preuve-header">📋 Tableau de synthèse – Réalisations professionnelles (Ryan RIRI)</div>
+      <div class="preuve-content" style="flex-direction:column;">
+        <div class="table-comp">
+          <table>
+            <thead><tr><th>Compétence</th><th>Réalisations pro / TPs</th><th>Statut</th></tr></thead>
+            <tbody>
+              <tr><td>Gérer le patrimoine informatique</td><td>GLPI – Inventaire automatique, agents, export matériels/logiciels</td><td class="check">✓ C1</td></tr>
+              <tr><td>Répondre aux incidents et demandes</td><td>GLPI tickets ITIL, catégories, règles affectation, entités</td><td class="check">✓ C7 / A2</td></tr>
+              <tr><td>Développer présence en ligne</td><td>GitHub Pages + Google Analytics, rapports trafic (C11)</td><td class="check">✓ C11</td></tr>
+              <tr><td>Travailler en mode projet</td><td>Hackaton V2 (chef de projet), planification, suivi indicateurs</td><td class="check">✓</td></tr>
+              <tr><td>Mettre à disposition un service</td><td>Déploiement GLPI, Apache HTTPS, support cybersécurité</td><td class="check">✓</td></tr>
+              <tr><td>Organiser son développement pro</td><td>Portfolio, veille, certifications, projet professionnel</td><td class="check">✓</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="font-family: var(--mono); font-size:0.7rem; color:var(--muted); border-top: 1px solid var(--border); padding-top:1rem; margin-top:0.5rem;">
+          📌 NOM : RIRI Ryan | N° candidat 20242060 | Option SISR | Portfolio hébergé GitHub Pages
+        </div>
+      </div>
+    </div>
+
+    <!-- Capture : Activité Google Analytics (C11) -->
+    <div class="preuve-block">
+      <div class="preuve-header">📈 C11 – Référencement & Google Analytics (EduCentre)</div>
+      <div class="preuve-content">
+        <div style="flex:1; min-width:240px;">
+          <div class="preuve-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='200' viewBox='0 0 420 200'%3E%3Crect width='420' height='200' fill='%23111820'/%3E%3Ctext x='20' y='35' fill='%2300ffe0' font-size='11'%3EGOOGLE ANALYTICS - ACTIVITE%3C/text%3E%3Ctext x='20' y='65' fill='%2339d353' font-size='10'%3E✔️ Code GTag intégré dans le site%3C/text%3E%3Ctext x='20' y='85' fill='%23cdd9e5' font-size='10'%3E✔️ Événements : clics, consultations%3C/text%3E%3Ctext x='20' y='105' fill='%23768390' font-size='9'%3ERapports d'audience générés (export PDF)%3C/text%3E%3Ctext x='20' y='130' fill='%2300aaff' font-size='9'%3EAvancement 100%25 - Tâche C11 validée%3C/text%3E%3C/svg%3E" alt="google analytics activity"/></div>
+          <div class="preuve-caption">✔️ Suivi de visibilité – intégration Google Tag et export analytics</div>
+        </div>
+        <div style="flex:1; min-width:240px;">
+          <div class="preuve-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='200' viewBox='0 0 420 200'%3E%3Crect width='420' height='200' fill='%23111820'/%3E%3Ctext x='20' y='35' fill='%2300ffe0' font-size='11'%3ELanding page GitHub Pages%3C/text%3E%3Ctext x='20' y='65' fill='%2339d353' font-size='10'%3E✔️ Repository public + lien site%3C/text%3E%3Ctext x='20' y='85' fill='%23768390' font-size='10'%3E✔️ Trafic généré depuis plusieurs sessions%3C/text%3E%3Ctext x='20' y='115' fill='%2300ffe0' font-size='9'%3ERapport Google Analytics exporté%3C/text%3E%3C/svg%3E" alt="github pages landing"/></div>
+          <div class="preuve-caption">🌐 GitHub Pages – Référencement en ligne (C11)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Capture Hackaton V2 + Chef de projet + Blue/Red Team -->
+    <div class="preuve-block">
+      <div class="preuve-header">🤝 Hackaton V2 – Rôle chef de projet & Blue/Red Team Cybersécurité</div>
+      <div class="preuve-content">
+        <div class="preuve-img" style="max-width:280px;"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='180' viewBox='0 0 300 180'%3E%3Crect width='300' height='180' fill='%23111820'/%3E%3Ctext x='20' y='30' fill='%2300ffe0' font-size='10'%3EHACKATON V2 - CHEF DE PROJET%3C/text%3E%3Ctext x='20' y='60' fill='%2339d353' font-size='9'%3E✓ Planification des sprints%3C/text%3E%3Ctext x='20' y='80' fill='%2339d353' font-size='9'%3E✓ Gestion d'équipe et livrables%3C/text%3E%3Ctext x='20' y='105' fill='%23768390' font-size='8'%3ERole : coordinateur technique%3C/text%3E%3C/svg%3E" alt="hackaton chef de projet"/></div>
+        <div class="preuve-img" style="max-width:280px;"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='180' viewBox='0 0 300 180'%3E%3Crect width='300' height='180' fill='%23111820'/%3E%3Ctext x='20' y='30' fill='%2300ffe0' font-size='10'%3ESUPPORT X CYBERSECURITE%3C/text%3E%3Ctext x='20' y='55' fill='%2339d353' font-size='8'%3E🔴 Phase Red Team finalisée%3C/text%3E%3Ctext x='20' y='75' fill='%2339d353' font-size='8'%3E🔵 Phase Blue Team finalisée%3C/text%3E%3Ctext x='20' y='100' fill='%23768390' font-size='8'%3E✔️ Export tickets GLPI + BDD%3C/text%3E%3Ctext x='20' y='125' fill='%2300aaff' font-size='8'%3EAttaques simulées sur GLPI%3C/text%3E%3C/svg%3E" alt="blue red team glpi"/></div>
+      </div>
+      <div class="preuve-caption" style="text-align:center;">🔹 Gestion de projet transverse : animation d'équipe, analyse risques, post-mortem 🔹 Blue Team / Red Team sur GLPI (audit sécurité)</div>
+    </div>
+
+    <!-- Capture Active Directory + migration Win10→11 / script client -->
+    <div class="preuve-block">
+      <div class="preuve-header">🏢 Réalisations milieu professionnel – AD, migration Windows 11 & déploiement logiciel</div>
+      <div class="preuve-content">
+        <div class="table-comp" style="width:100%">
+          <table>
+            <thead><tr><th>Activité professionnelle</th><th>Compétences associées</th><th>Avancement</th></tr></thead>
+            <tbody>
+              <tr><td>Création de boîte mail via GLPI</td><td>Gérer patrimoine / Mettre à disposition service</td><td class="check">✓</td></tr>
+              <tr><td>Projet migration Windows 10 → Windows 11 (parc entier)</td><td>Planification, déploiement, accompagnement utilisateur</td><td class="check">✓</td></tr>
+              <tr><td>Ajout logiciel via Microsoft Endpoint / parc informatique</td><td>Maintenance applicative, gestion licences</td><td class="check">✓</td></tr>
+              <tr><td>Script déploiement sur PC client (accès distant)</td><td>Automatisation PowerShell, Active Directory</td><td class="check">✓</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="preuve-img" style="max-width:100%; margin-top:1rem;"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='120' viewBox='0 0 500 120'%3E%3Crect width='500' height='120' fill='%23111820'/%3E%3Ctext x='20' y='30' fill='%2300ffe0' font-size='11'%3EACTIVE DIRECTORY - Migration de parc%3C/text%3E%3Ctext x='20' y='55' fill='%2339d353' font-size='9'%3E✔️ GPO, scripts logon, déploiement Windows 11%3C/text%3E%3Ctext x='20' y='80' fill='%23768390' font-size='9'%3E✔️ Ajout de logiciels centralisé (Microsoft) et script d'accès client%3C/text%3E%3C/svg%3E" alt="active directory preuve"/></div>
+      </div>
+    </div>
+
+    <!-- FDR Sécurisation HTTP + réponse aux questions -->
+    <div class="preuve-block">
+      <div class="preuve-header">🔒 FDR – Sécuriser un serveur HTTP (réponses et déploiement)</div>
+      <div class="preuve-content">
+        <div class="preuve-img"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='380' height='160' viewBox='0 0 380 160'%3E%3Crect width='380' height='160' fill='%23111820'/%3E%3Ctext x='15' y='25' fill='%2300ffe0' font-size='10'%3E✔️ VM Debian 12 + Apache%3C/text%3E%3Ctext x='15' y='48' fill='%2339d353' font-size='9'%3E✔️ Commande génération certificat auto-signé%3C/text%3E%3Ctext x='15' y='70' fill='%2339d353' font-size='9'%3E✔️ Modification /etc/apache2/ports.conf%3C/text%3E%3Ctext x='15' y='92' fill='%23768390' font-size='9'%3E✔️ Différence TLS/SSL, handshake explication%3C/text%3E%3Ctext x='15' y='115' fill='%2300aaff' font-size='9'%3EChaîne de confiance & certificats racine%3C/text%3E%3C/svg%3E" alt="fdr securisation http"/></div>
+        <div style="flex:1; font-family: var(--mono); font-size:0.75rem; color:var(--muted);">
+          <p>📌 Réponses clés :<br>- Cryptographie symétrique vs asymétrique pour TLS.<br>- Certificat SSL contient clé publique, identité, dates validité.<br>- Handshake TLS : négociation chiffrement.<br>- Chain of Trust : autorité racine → intermédiaire → certificat serveur.<br>- Fichier de configuration : <span style="color:var(--accent)">default-ssl.conf / sites-available</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- PROFIL + STATS -->
+<section id="about">
+  <div class="section-label">// 04 · profil & résultats BTS SIO</div>
+  <h2>À propos de mon parcours</h2>
+  <hr class="section-line"/>
+  <div class="about-grid">
+    <div class="about-block"><h3>Formation & objectifs</h3><p>Étudiant BTS SIO option SISR, passionné cybersécurité et administration systèmes. Mise en pratique via EduCentre, stages et réalisations en entreprise. Objectif : poursuite en Bachelor Cybersécurité ou RSSI.</p></div>
+    <div class="about-block"><h3>Indicateurs clés</h3><div class="stat-row"><span class="stat-label">TPs complets</span><span class="stat-val green">6/6 majeurs</span></div><div class="stat-row"><span class="stat-label">C1 / C7 / C11</span><span class="stat-val green">100% validés</span></div><div class="stat-row"><span class="stat-label">Blue/Red Team</span><span class="stat-val green">Certifié EduCentre</span></div><div class="stat-row"><span class="stat-label">Hackaton V2</span><span class="stat-val green">Chef de projet</span></div></div>
+    <div class="about-block"><h3>Outils maîtrisés</h3><div class="stat-row"><span class="stat-label">GLPI / FusionInventory</span><span class="stat-val">Expert</span></div><div class="stat-row"><span class="stat-label">Active Directory</span><span class="stat-val">GPO, scripts</span></div><div class="stat-row"><span class="stat-label">Linux Apache/SSL</span><span class="stat-val">Sécurisation</span></div></div>
+    <div class="about-block"><h3>Certifications & soft skills</h3><div class="stat-row"><span class="stat-label">Gestion de projet</span><span class="stat-val green">ANALYSE & PLANIF.</span></div><div class="stat-row"><span class="stat-label">Veille techno</span><span class="stat-val green">CVE, NIST</span></div><div class="stat-row"><span class="stat-label">Anglais technique</span><span class="stat-val">B2/C1</span></div></div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 · Ryan RIRI · Portfolio BTS SIO · Cybersécurité & Infra</p>
+  <p>Hébergé sur GitHub Pages · <a href="#competences">Compétences</a> · <a href="#preuves">Preuves EduCentre</a></p>
+</footer>
+
+</body>
+</html>
